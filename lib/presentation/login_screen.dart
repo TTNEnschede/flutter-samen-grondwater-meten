@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_samen_grondwater_meten/authentication/keycloak_oauth_api.dart';
-import 'package:flutter_samen_grondwater_meten/presentation/home_screen.dart';
+import 'package:flutter_samen_grondwater_meten/presentation/container/user_login_container.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,36 +9,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginScreen> {
-  // oAuth authenticator for logging in.
-  KeyCloakOAuthApi oAuthAuthenticator;
-
-  void initState() {
-    super.initState();
-
-    // Initalize the authenticator.
-    oAuthAuthenticator = KeyCloakOAuthApi();
-  }
-
-  void _login() async {
-    try {
-      // Authenticate user. Once logged in token is stored in secure storage
-      // and refreshed for consecutive logins.
-      var success = await oAuthAuthenticator.authenticate();
-
-      // Go to home page after successful login.
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _logout() async {
-    await oAuthAuthenticator.logOut();
-    print("Logged out");
-  }
 
   // Logo.
   final logo = Hero(
@@ -50,7 +19,6 @@ class _LoginState extends State<LoginScreen> {
       child: Image.asset('assets/logo.png'),
     ),
   );
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +33,7 @@ class _LoginState extends State<LoginScreen> {
             SizedBox(height: 50.0),
             logo,
             SizedBox(height: 100.0),
-            ButtonTheme(
-              child: RaisedButton(
-                onPressed: () {
-                  _login();
-                },
-                color: Colors.lightBlueAccent,
-                child: Text('Log In', style: TextStyle(color: Colors.white)),
-              ),
-            ),
+            UserLoginContainer(),
           ],
         ),
         ),
