@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'package:water_levels/action/actions.dart';
-import 'package:water_levels/model/models.dart';
+import 'package:flutter_samen_grondwater_meten/action/actions.dart';
+import 'package:flutter_samen_grondwater_meten/model/models.dart';
 
 class UserLogoutContainer extends StatelessWidget {
 
@@ -21,7 +21,13 @@ class UserLogoutContainer extends StatelessWidget {
             child: IconButton(
                 icon: new Icon(Icons.exit_to_app),
                 color: Colors.black.withOpacity(0.9),
-                onPressed: vm.visible ? vm.onLogoutPressed: null),
+                onPressed: () {
+                  if (vm.visible) {
+                    vm.onLogoutPressed();
+                    Navigator.pop(context);
+                  }
+                }
+            ),
           );
       },
     );
