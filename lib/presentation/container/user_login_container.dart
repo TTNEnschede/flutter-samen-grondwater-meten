@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:simple_auth/simple_auth.dart';
+
+import 'package:flutter_samen_grondwater_meten/action/actions.dart';
 import 'package:flutter_samen_grondwater_meten/authentication/keycloak_oauth_api.dart';
 import 'package:flutter_samen_grondwater_meten/authentication/token_decoder.dart';
 import 'package:flutter_samen_grondwater_meten/presentation/home_screen.dart';
-import 'package:redux/redux.dart';
-
-import 'package:flutter_samen_grondwater_meten/action/actions.dart';
 import 'package:flutter_samen_grondwater_meten/model/models.dart';
-import 'package:simple_auth/simple_auth.dart';
 
 class UserLoginContainer extends StatelessWidget {
 
@@ -24,7 +24,7 @@ class UserLoginContainer extends StatelessWidget {
       // and refreshed for consecutive logins.
       OAuthAccount success = await oAuthAuthenticator.authenticate();
       var decoded = TokenDecoder().parseJwt(success.token);
-      onLoggedIn(decoded['preferred_username']);
+      onLoggedIn(decoded['name']);
 
       // Go to home page after successful login.
       Navigator.push(
