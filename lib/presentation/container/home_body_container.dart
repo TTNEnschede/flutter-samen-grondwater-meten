@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import 'package:flutter_samen_grondwater_meten/action/actions.dart';
 import 'package:flutter_samen_grondwater_meten/model/models.dart';
+import 'package:flutter_samen_grondwater_meten/presentation/chart_screen.dart';
+import 'package:flutter_samen_grondwater_meten/presentation/config_screen.dart';
+import 'package:flutter_samen_grondwater_meten/presentation/info_screen.dart';
 
-class BottomNavigationContainer extends StatelessWidget {
+class HomeBodyContainer extends StatelessWidget {
 
-  BottomNavigationContainer({Key key}) : super(key: key);
+  HomeBodyContainer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,38 +17,39 @@ class BottomNavigationContainer extends StatelessWidget {
       distinct: true,
       converter: _ViewModel.fromStore,
       builder: (context, vm) {
-        return BottomNavigationBar(
-          currentIndex: AppTab.values.indexOf(vm.activeTab),
-          onTap: vm.onTabSelected,
-          items: AppTab.values.map( (tab) {
-            return BottomNavigationBarItem(
-                icon: Icon(AppTabIcons[tab]),
-                title: Text(_capitalize(tab.toString().split('.')[1])));
-          }).toList(),
-        );
+        Widget _screen;
+        switch (vm.activeTab) {
+          case AppTab.info:
+            _screen = InfoScreen();
+            break;
+          case AppTab.overzicht:
+            _screen = ChartScreen();
+            break;
+          case AppTab.configuratie:
+            _screen = ConfigScreen();
+            break;
+          default:
+            _screen = Center(child: Text('Unknown screen'));
+            break;
+        }
+        return _screen;
       },
     );
   }
 
-  String _capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 }
 
 class _ViewModel {
 
   final AppTab activeTab;
-  final Function(int) onTabSelected;
 
   _ViewModel({
     @required this.activeTab,
-    @required this.onTabSelected,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       activeTab: store.state.activeTab,
-      onTabSelected: (index) {
-        store.dispatch(UpdateTabAction((AppTab.values[index])));
-      },
     );
   }
 

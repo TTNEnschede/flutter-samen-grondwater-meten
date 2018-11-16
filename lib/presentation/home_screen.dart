@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_samen_grondwater_meten/presentation/container/bottom_nav_container.dart';
+import 'package:flutter_samen_grondwater_meten/presentation/container/home_body_container.dart';
 import 'package:flutter_samen_grondwater_meten/presentation/container/user_logout_container.dart';
 import 'package:flutter_samen_grondwater_meten/presentation/container/username_container.dart';
 
@@ -35,7 +36,7 @@ class _HomeState extends State<HomeScreen> {
           )
       ),
       body: Center(
-          child: Text('Home sweet home!')
+        child: HomeBodyContainer(),
       ),
       bottomNavigationBar: new Theme(
         data: Theme.of(context).copyWith(
