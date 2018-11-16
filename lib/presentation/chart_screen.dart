@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_samen_grondwater_meten/presentation/chart_filter.dart';
+import 'package:flutter_samen_grondwater_meten/presentation/chart_main.dart';
+
 class ChartScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -10,8 +13,11 @@ class ChartScreen extends StatefulWidget {
 class _ChartState extends State<ChartScreen> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Chart sweet chart!'),
+    return Column(
+      children: <Widget>[
+        ChartMain(),
+        ChartFilter(),
+      ],
     );
   }
 }
